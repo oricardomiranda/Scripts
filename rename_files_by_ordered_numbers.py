@@ -5,14 +5,17 @@ import argparse
 def rename_files(directory):
     # List all files in the directory
     files = sorted(os.listdir(directory))
+    
+    # Count the number of files to determine the number of digits needed for zero-padding
+    num_digits = len(str(len(files)))
 
     # Iterate through the files and rename them
     for count, filename in enumerate(files, start=1):
         # Get the file extension
         file_extension = os.path.splitext(filename)[1]
 
-        # Construct the new filename
-        new_filename = f"{count}{file_extension}"
+        # Construct the new filename with leading zeros
+        new_filename = f"{str(count).zfill(num_digits)}{file_extension}"
 
         # Get the full path for the current and new filename
         old_file = os.path.join(directory, filename)
@@ -36,12 +39,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
-    
-    
-# How to Use the Script:
-
-# 	1.	Save the script to a file, e.g., rename_files.py.
-# 	2.	Run it from the command line, providing the directory as an argument:
-
-# python rename_files.py /path/to/your/directory
